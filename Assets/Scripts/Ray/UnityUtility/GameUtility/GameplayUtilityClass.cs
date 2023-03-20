@@ -209,5 +209,39 @@ namespace UnityUtility
             }
         }
 
+        [Serializable]
+        public class AnimatorParameterManual : AnimatorParameterStatic
+        {
+            [SerializeField]
+            protected string setterName;
+
+            public string SetterName => setterName;
+
+            public AnimatorParameterManual(string setterName, string paramName) : base(paramName)
+            {
+                this.setterName = setterName;
+            }
+
+            public AnimatorParameterManual(string setterName, string paramName, int intValue) : base(paramName, intValue)
+            {
+                this.setterName = setterName;
+            }
+
+            public AnimatorParameterManual(string setterName, string paramName, float floatValue) : base(paramName, floatValue)
+            {
+                this.setterName = setterName;
+            }
+
+            public AnimatorParameterManual(string setterName, string paramName, bool boolValue) : base(paramName, boolValue)
+            {
+                this.setterName = setterName;
+            }
+
+            public void SetParam(string setterName, Animator animator)
+            {
+                if (setterName == this.setterName)
+                    base.SetParam(animator);
+            }
+        }
     }
 }
