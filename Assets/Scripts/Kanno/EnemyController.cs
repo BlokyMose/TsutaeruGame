@@ -10,18 +10,18 @@ namespace Tsutaeru
 
         public float destroyTimer = 0f;
 
-        public GameObject target;
+        private GameObject player;
 
         public GameObject destroyEnemy;
 
         void Start()
         {
-            
+            player = GameObject.FindGameObjectsWithTag("Player")[0];
         }
 
         void Update()
         {
-            transform.position = Vector2.MoveTowards(transform.position, target.transform.position, speed * Time.deltaTime);
+            transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
 
             Destroy(destroyEnemy, destroyTimer);
         }
