@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: tsu_eye_r
+  m_Controller: {fileID: 9100000, guid: cb025db895d51f74e9759b1894a9f399, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: f42bc6b5f9be3204884dd8b55f022705, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: b0666dc3daf427a4ea459c33e2d6f96f, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 4ef7c2f976bfac84da77fc88b3c6818f, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 3f1e1d4cad2c6a84094173acb4ba98b9, type: 2}

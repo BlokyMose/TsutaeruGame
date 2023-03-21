@@ -26,21 +26,19 @@ namespace Tsutaeru
         int heartCount = 3;
 
         [SerializeField]
-        UnityEvent onDie;
+        public UnityEvent onDie;
 
         Animator animator;
         List<Image> hearts = new();
         int currentHP;
+        public int CurrentHP => currentHP;
         int boo_show;
 
-        private void Awake()
+        public void Init()
         {
             animator = GetComponent<Animator>();
             boo_show = Animator.StringToHash(nameof(boo_show));
-        }
-
-        void Start()
-        {
+        
             currentHP = heartCount;
             heartsParent.DestroyChildren();
             hearts.Clear();
@@ -62,8 +60,10 @@ namespace Tsutaeru
             animator.SetBool(boo_show, false);
         }
 
-        public void ReduceHealth()
+        public void ReduceHP()
         {
+            if (currentHP <= 0) return;
+
             currentHP--;
             hearts[currentHP].sprite = emptyHeartSprite;
 
@@ -73,7 +73,7 @@ namespace Tsutaeru
             }
         }
 
-        public void RestoreAllHealth()
+        public void RestoreHP()
         {
             foreach (var heart in hearts)
                 heart.sprite = fullHeartSprite;

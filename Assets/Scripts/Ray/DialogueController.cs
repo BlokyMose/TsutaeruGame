@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+using static Tsutaeru.GameController;
 
 namespace Tsutaeru
 {
     public class DialogueController : MonoBehaviour
     {
+        [Header("Boy")]
         [SerializeField]
         Animator bubbleBoy;
 
@@ -14,30 +17,51 @@ namespace Tsutaeru
         TextMeshProUGUI textBoy;
 
         [SerializeField]
+        Image boyImage;
+
+        [Header("Girl")]
+        [SerializeField]
         Animator bubbleGirl;
 
         [SerializeField]
         TextMeshProUGUI textGirl;
 
+        [SerializeField]
+        Image girlImage;
+
         int boo_show;
 
-        private void Awake()
+        public void Init()
         {
             boo_show = Animator.StringToHash(nameof(boo_show));
         }
 
-        public void SetTextToBubbleBoy(string text)
+        public void SetDialogueToBubbleBoy(DialogueLine dialogue)
         {
-            textBoy.text = text;
+            textBoy.text = dialogue.Line;
+            SetSpriteBoy(dialogue.Sprite);
             bubbleBoy.SetBool(boo_show, true);
             bubbleGirl.SetBool(boo_show, false);
         }        
         
-        public void SetTextToBubbleGirl(string text)
+        public void SetDialogueToBubbleGirl(DialogueLine dialogue)
         {
-            textGirl.text = text;
+            textGirl.text = dialogue.Line;
+            SetSpriteGirl(dialogue.Sprite);
             bubbleGirl.SetBool(boo_show, true);
             bubbleBoy.SetBool(boo_show, false);
+        }
+
+        public void SetSpriteBoy(Sprite sprite)
+        {
+            if (sprite != null)
+                boyImage.sprite = sprite;
+        }
+
+        public void SetSpriteGirl(Sprite sprite)
+        {
+            if (sprite != null)
+                girlImage.sprite = sprite;
         }
 
         public void HideAll()

@@ -10,7 +10,7 @@ namespace Tsutaeru
         Animator animator;
         int int_mode;
 
-        private void Awake()
+        public void Init()
         {
             animator = GetComponent<Animator>();
             int_mode = Animator.StringToHash(nameof(int_mode));

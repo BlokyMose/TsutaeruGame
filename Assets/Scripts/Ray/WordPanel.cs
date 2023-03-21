@@ -15,7 +15,7 @@ namespace Tsutaeru
         Animator animator;
         int boo_show;
 
-        void Awake()
+        public void Init()
         {
             animator = GetComponent<Animator>();
             boo_show = Animator.StringToHash(nameof(boo_show));

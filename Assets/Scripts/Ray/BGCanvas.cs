@@ -8,9 +8,19 @@ namespace Tsutaeru
     [RequireComponent(typeof(Canvas))]
     public class BGCanvas : MonoBehaviour
     {
-        void Start()
+        public static BGCanvas Instance;
+
+        void Awake()
         {
-            DontDestroyOnLoad(gameObject);
+            if (BGCanvas.Instance == null)
+            {
+                BGCanvas.Instance = this;
+                DontDestroyOnLoad(gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
 
         public void OnLoadScene()
