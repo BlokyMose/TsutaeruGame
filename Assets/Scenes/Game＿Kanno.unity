@@ -383,7 +383,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7daf8ac2ce4fb7c4c833c70e1308b345, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 30
+  rotateSpeed: 30
   bounds:
     xMin: -50
     xMax: 50

@@ -7,7 +7,7 @@ namespace Tsutaeru
     public class PlayerController : MonoBehaviour
     {
 
-        public float speed = 20;
+        public float rotateSpeed = 20;
 
         // X, YÀ•W‚ÌˆÚ“®‰Â”\”ÍˆÍ
         [System.Serializable]
@@ -41,7 +41,7 @@ namespace Tsutaeru
         void Rotation()
         {
             float wh = Input.GetAxis("Mouse ScrollWheel");
-            transform.Rotate(new Vector3(0f, 0f, wh * speed));
+            transform.Rotate(new Vector3(0f, 0f, wh * rotateSpeed));
         }
     }
 }
