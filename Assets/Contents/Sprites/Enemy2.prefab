@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6630389413283952116}
   - component: {fileID: 6630389413283952117}
   - component: {fileID: 6630389413283952119}
+  - component: {fileID: 5202823276987002521}
   m_Layer: 0
   m_Name: Enemy2
   m_TagString: Enemy
@@ -98,5 +99,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
-  destroyTimer: 10
+  lifeDuration: 5
   destroyEnemy: {fileID: 6630389413283952114}
+  text: {fileID: 0}
+  hiraganas:
+  - "\u3042"
+  - "\u3046"
+  - "\u304A"
+  - "\u3064"
+  - "\u304B"
+  - "\u304D"
+  - "\u3055"
+  - "\u3061"
+  - "\u306D"
+  - "\u306E"
+  - "\u307F"
+  - "\u308B"
+  - "\u308C"
+  - "\u308D"
+  - "\u308F"
+--- !u!70 &5202823276987002521
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6630389413283952114}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.5, y: 1}
+  m_Direction: 0

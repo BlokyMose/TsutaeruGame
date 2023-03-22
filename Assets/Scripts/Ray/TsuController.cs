@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
+using UnityUtility;
 using static UnityEngine.InputSystem.InputAction;
 
 namespace Tsutaeru
@@ -17,7 +20,20 @@ namespace Tsutaeru
         [SerializeField]
         float rotationSpeed = 1f;
 
+        [SerializeField]
+        Transform receivedHiraganasParent;
+
+        [SerializeField]
+        float receivedHiraganasSpace = 2;
+
+        [SerializeField]
+        GameObject receivedHiraganaPrefab;
+
+        [SerializeField]
+        Vector2 receivedHiraganaScale = new Vector2(2, 2);
+
         public UnityEvent OnDamaged;
+        public Action<string> OnHitHiragana;
 
         Vector2 targetPos;
         Collider2D col;
@@ -72,6 +88,25 @@ namespace Tsutaeru
         void OnCollisionEnter2D(Collision2D collision)
         {
             OnDamaged.Invoke();
+
+            var hiragana = collision.gameObject.GetComponent<HiraganaController>();
+            if (hiragana != null)
+                OnHitHiragana(hiragana.GetHiragana);
+
+            Destroy(collision.gameObject);
+        }
+
+        public void AddHiragana(string hiragana)
+        {
+            var hiraganaGO = Instantiate(receivedHiraganaPrefab, receivedHiraganasParent);
+            hiraganaGO.transform.localPosition = new Vector2(receivedHiraganasParent.childCount * receivedHiraganasSpace, 0);
+            hiraganaGO.GetComponentInFamily<TextMeshProUGUI>().text = hiragana;
+            hiraganaGO.transform.localScale = receivedHiraganaScale;
+        }
+
+        public void ClearHiraganas()
+        {
+            receivedHiraganasParent.DestroyChildren();
         }
     }
 }

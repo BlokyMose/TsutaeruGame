@@ -6,8 +6,7 @@ using UnityEngine;
 
 namespace Tsutaeru
 {
-    [RequireComponent(typeof(CapsuleCollider2D))]
-    public class EnemyController : MonoBehaviour
+    public class HiraganaController : MonoBehaviour
     {
         public float speed = 0;
 
@@ -15,20 +14,25 @@ namespace Tsutaeru
 
         private GameObject player;
 
-        public GameObject destroyEnemy;
-
         public TextMeshProUGUI text;
 
         [SerializeField]
         List<string> hiraganas = new();
 
         public string GetHiragana => text.text;
-
+        bool hasHiraganaSet = false;
 
         void Start()
         {
             player = GameObject.FindGameObjectsWithTag("Player")[0];
-            text.text = hiraganas.GetRandom();
+            if (!hasHiraganaSet)
+                text.text = hiraganas.GetRandom();
+        }
+
+        public void SetHiragana(string hiragana)
+        {
+            text.text = hiragana;
+            hasHiraganaSet = true;
         }
 
         void Update()
@@ -36,6 +40,5 @@ namespace Tsutaeru
             transform.position = Vector2.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
             Destroy(gameObject, 5f);
         }
-
     }
 }

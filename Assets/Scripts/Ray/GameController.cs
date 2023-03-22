@@ -50,10 +50,19 @@ namespace Tsutaeru
 
         [Title("Data")]
         [SerializeField]
+        string initialHiragana = "";
+
+        [SerializeField]
+        int spawnCorrectHiraganaEveryCount = 10;
+
+        [SerializeField]
         List<Stage> stages= new();
 
         [SerializeField]
         Stage gameOverStage;
+
+        [SerializeField]
+        Stage winStage;
 
         [SerializeField]
         CharacterSpriteLib boySprites;
@@ -64,6 +73,9 @@ namespace Tsutaeru
         [Title("Components")]
         [SerializeField]
         TsuController tsu;
+
+        [SerializeField]
+        HiraganaSpawner hiraganaSpawner;
 
         [SerializeField]
         WordPanel wordPanel;
@@ -83,6 +95,9 @@ namespace Tsutaeru
         [SerializeField]
         GameObject gameOverScreen;
 
+        [SerializeField]
+        GameObject winScreen;
+
         [Title("Buttons")]
         [SerializeField]
         Image nextDialogueBut;
@@ -94,6 +109,8 @@ namespace Tsutaeru
         Stage currentStage;
         int currentStageIndex = 0;
         int currentDialogueLineIndex = 0;
+        string receivedHiraganas = "";
+        int correctHiraganaCooldown = 0;
 
         void Awake()
         {
@@ -105,14 +122,51 @@ namespace Tsutaeru
             tsu.Init();
 
             nextDialogueBut.AddEventTrigger(NextDialogue);
-            gameOverBut.AddEventTrigger(LoadMainMenu);
+            gameOverBut.AddEventTrigger(() => { if (currentStage == gameOverStage) ShowGameOverAndLoadMainMenu(); else ShowWinScreenAndLoadMainMenu(); });
             gameOverBut.gameObject.SetActive(false);
             gameOverScreen.SetActive(false);
+            winScreen.SetActive(false);
 
-            tsu.OnDamaged.AddListener(ReduceHP);
+            tsu.OnHitHiragana += CheckHiragana;
             hpController.onDie.AddListener(GameOver);
+            hiraganaSpawner.OnSpawn += CheckSpawnCorrectHiragana;
 
             PlayStage(0);
+
+        }
+
+        void CheckSpawnCorrectHiragana()
+        {
+            correctHiraganaCooldown++;
+            if (correctHiraganaCooldown >= spawnCorrectHiraganaEveryCount)
+            {
+                correctHiraganaCooldown = 0;
+                hiraganaSpawner.Spawn(currentStage.TargetWord[receivedHiraganas.Length].ToString());
+            }
+        }
+
+
+        void OnDestroy()
+        {
+            tsu.OnHitHiragana -= CheckHiragana;
+            hiraganaSpawner.OnSpawn -= CheckSpawnCorrectHiragana;
+        }
+
+        void CheckHiragana(string hiragana)
+        {
+            if (currentStage.TargetWord[receivedHiraganas.Length].ToString() == hiragana)
+            {
+                receivedHiraganas += hiragana;
+                wordPanel.SetTextColored(currentStage.TargetWord, receivedHiraganas.Length);
+                tsu.AddHiragana(hiragana);
+
+                if (currentStage.TargetWord == receivedHiraganas)
+                    NextStage();
+            }
+            else
+            {
+                ReduceHP();
+            }
         }
 
         public void NextStage()
@@ -137,21 +191,30 @@ namespace Tsutaeru
         public void PlayStage(int stageIndex)
         {
             currentStageIndex = stageIndex;
-            PlayStage(stages[currentStageIndex]);
+            if (currentStageIndex == stages.Count)
+            {
+                Win();
+            }
+            else
+            {
+                PlayStage(stages[currentStageIndex]);
+            }
+        }
+
+        public void Win()
+        {
+            PlayStage(winStage);
         }
 
         public void PlayStage(Stage stage)
         {
-            currentStage = stage;
+            tsu.ClearHiraganas();
+            correctHiraganaCooldown = 0;
+            currentStage = stage; 
             currentDialogueLineIndex = 0;
+            receivedHiraganas = initialHiragana;
             SetGameState(GameState.OutGame);
             PlayDialogue(currentDialogueLineIndex);
-        }
-
-        [Button]
-        public void TestGameOver()
-        {
-            PlayStage(gameOverStage);
         }
 
         public void NextDialogue()
@@ -160,6 +223,12 @@ namespace Tsutaeru
             PlayDialogue(currentDialogueLineIndex);
 
             if (currentStage == gameOverStage && currentDialogueLineIndex == gameOverStage.Dialogue.Count - 1)
+            {
+                gameOverBut.gameObject.SetActive(true);
+                nextDialogueBut.gameObject.SetActive(false);
+            }            
+            
+            else if (currentStage == winStage && currentDialogueLineIndex == gameOverStage.Dialogue.Count - 1)
             {
                 gameOverBut.gameObject.SetActive(true);
                 nextDialogueBut.gameObject.SetActive(false);
@@ -205,9 +274,10 @@ namespace Tsutaeru
         [Button]
         public void SetInGame()
         {
+            hiraganaSpawner.IsPaused = false;
             tsu.Show();
 
-            wordPanel.SetText(currentStage.TargetWord);
+            wordPanel.SetTextColored(currentStage.TargetWord,receivedHiraganas.Length);
             hpController.RestoreHP();
             hpController.Show();
             dialogueController.HideAll();
@@ -218,6 +288,7 @@ namespace Tsutaeru
         [Button]
         public void SetOutGame()
         {
+            hiraganaSpawner.IsPaused = true;
             tsu.Hide();
             wordPanel.Hide();
             hpController.Hide();
@@ -225,13 +296,25 @@ namespace Tsutaeru
             anoSonoSpawner.Pause();
         }
 
-        public void LoadMainMenu()
+        public void ShowGameOverAndLoadMainMenu()
         {
             StartCoroutine(Delay(3.2f));
             IEnumerator Delay(float delay)
             {
                 Exit();
                 gameOverScreen.SetActive(true);
+                yield return new WaitForSeconds(delay);
+                SceneManager.LoadScene("MainMenu");
+            }
+        }        
+        
+        public void ShowWinScreenAndLoadMainMenu()
+        {
+            StartCoroutine(Delay(3.2f));
+            IEnumerator Delay(float delay)
+            {
+                Exit();
+                winScreen.SetActive(true);
                 yield return new WaitForSeconds(delay);
                 SceneManager.LoadScene("MainMenu");
             }

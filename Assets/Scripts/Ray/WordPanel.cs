@@ -27,6 +27,13 @@ namespace Tsutaeru
             this.text.text = text;
         }
 
+        public void SetTextColored(string text, int length)
+        {
+            animator.SetBool(boo_show, true);
+            if (length > text.Length) length = text.Length;
+            this.text.text = $"<color=#E8574A>{text[0..length]}</color>{text[length..]}";
+        }
+
         public void Hide()
         {
             animator.SetBool(boo_show, false);

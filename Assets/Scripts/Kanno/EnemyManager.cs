@@ -35,7 +35,8 @@ namespace Tsutaeru
                 float posX = Random.Range(minX, maxX);
                 float posY = Random.Range(minY, maxY);
 
-                Instantiate(enemyList[index], new Vector3(posX, posY, 0), Quaternion.identity);
+                var enemyGO = Instantiate(enemyList[index], new Vector3(posX, posY, 0), Quaternion.identity);
+                enemyGO.SetActive(true);
             }
         }
     }

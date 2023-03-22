@@ -6,7 +6,8 @@ namespace Tsutaeru
 {
     public class PlayerController : MonoBehaviour
     {
-
+        public string hiraganasHit;
+        public string targetWord;
         public float rotateSpeed = 20;
 
         // X, YÀ•W‚ÌˆÚ“®‰Â”\”ÍˆÍ
@@ -49,7 +50,9 @@ namespace Tsutaeru
             var enemyController = collision.gameObject.GetComponent<EnemyController>();
             if (enemyController != null)
             {
-                Debug.Log(enemyController.GetHiragana);
+                hiraganasHit += enemyController.GetHiragana;
+                if (hiraganasHit == targetWord)
+                    Debug.Log("WIN");
             }
             Destroy(collision.gameObject);
         }
