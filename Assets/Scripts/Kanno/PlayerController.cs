@@ -43,5 +43,15 @@ namespace Tsutaeru
             float wh = Input.GetAxis("Mouse ScrollWheel");
             transform.Rotate(new Vector3(0f, 0f, wh * rotateSpeed));
         }
+
+        void OnCollisionEnter2D(Collision2D collision)
+        {
+            var enemyController = collision.gameObject.GetComponent<EnemyController>();
+            if (enemyController != null)
+            {
+                Debug.Log(enemyController.GetHiragana);
+            }
+            Destroy(collision.gameObject);
+        }
     }
 }

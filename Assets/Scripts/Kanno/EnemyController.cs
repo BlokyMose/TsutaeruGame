@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 namespace Tsutaeru
 {
+    [RequireComponent(typeof(CapsuleCollider2D))]
     public class EnemyController : MonoBehaviour
     {
         public float speed = 0;
@@ -13,6 +15,11 @@ namespace Tsutaeru
         private GameObject player;
 
         public GameObject destroyEnemy;
+
+        public TextMeshProUGUI text;
+
+        public string GetHiragana => text.text;
+
 
         void Start()
         {
@@ -25,5 +32,6 @@ namespace Tsutaeru
 
             Destroy(destroyEnemy, destroyTimer);
         }
+
     }
 }
