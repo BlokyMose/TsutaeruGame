@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: CharSL_Girl_F
   m_EditorClassIdentifier: 
   normal: {fileID: 21300000, guid: cd4d5dbd0119b7b468554b19a31410b6, type: 3}
-  happy: {fileID: 0}
-  sad: {fileID: 0}
-  nervous: {fileID: 0}
-  nervousMuch: {fileID: 0}
-  happyNervous: {fileID: 0}
+  happy: {fileID: 21300000, guid: ab33ae20c22d1bf448f0544c02636493, type: 3}
+  sad: {fileID: 21300000, guid: 42185dd89414d2240989bec82dc90646, type: 3}
+  nervous: {fileID: 21300000, guid: 42185dd89414d2240989bec82dc90646, type: 3}
+  nervousMuch: {fileID: 21300000, guid: 42185dd89414d2240989bec82dc90646, type: 3}
+  happyNervous: {fileID: 21300000, guid: 42185dd89414d2240989bec82dc90646, type: 3}

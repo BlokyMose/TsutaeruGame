@@ -243,6 +243,9 @@ namespace Tsutaeru
         {
             currentDialogueLineIndex = dialogueLineIndex;
 
+            dialogueController.SetSpriteBoy(boySprites.Normal);
+            dialogueController.SetSpriteGirl(girlSprites.Normal);
+
             if (currentDialogueLineIndex >= currentStage.Dialogue.Count)
             {
                 SetGameState(GameState.InGame);
