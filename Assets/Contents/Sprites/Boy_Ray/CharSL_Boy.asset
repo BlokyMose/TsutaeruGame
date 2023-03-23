@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f743054538401549983e08e5d088b5c, type: 3}
+  m_Name: CharSL_Boy
+  m_EditorClassIdentifier: 
+  normal: {fileID: 21300000, guid: c60154efd0b507b46a1491ae645998aa, type: 3}
+  happy: {fileID: 21300000, guid: 8e8f6369a586a95429218dc0af8ab478, type: 3}
+  sad: {fileID: 21300000, guid: 219ca8710183e194da929a81c39e59c8, type: 3}
+  nervous: {fileID: 21300000, guid: b71e4b68c68c5384b9c6160892990acc, type: 3}
+  nervousMuch: {fileID: 21300000, guid: 03dcf604d70535b4d97bae6079b4c37d, type: 3}
+  happyNervous: {fileID: 0}

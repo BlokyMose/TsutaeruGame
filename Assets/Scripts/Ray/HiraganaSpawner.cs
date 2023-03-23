@@ -20,6 +20,8 @@ namespace Tsutaeru
 
         public Action OnSpawn;
 
+        List<HiraganaController> existingHiraganas = new();
+
 
         void Update()
         {
@@ -54,10 +56,22 @@ namespace Tsutaeru
 
             var hiragana = Instantiate(hiraganaPrefab, new Vector3(posX, posY, 0), Quaternion.identity);
             hiragana.gameObject.SetActive(true);
+            existingHiraganas.Add(hiragana);
+            hiragana.OnDie += () => { existingHiraganas.Remove(hiragana); };
+
             if (!string.IsNullOrEmpty(hiraganaText))
                 hiragana.SetHiragana(hiraganaText);
 
+
             OnSpawn?.Invoke();
+        }
+
+        public void DestroyAllHiraganas()
+        {
+            foreach (var hiragana in existingHiraganas)
+            {
+                Destroy(hiragana.gameObject);
+            }
         }
     }
 }

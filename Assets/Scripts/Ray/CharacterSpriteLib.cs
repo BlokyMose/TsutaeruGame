@@ -32,5 +32,19 @@ namespace Tsutaeru
         public Sprite Nervous { get => nervous; }
         public Sprite NervousMuch { get => nervousMuch; }
         public Sprite HappyNervous { get => happyNervous; }
+
+        public Sprite Get(Emotion emotion)
+        {
+            return emotion switch
+            {
+                Emotion.Normal => normal,
+                Emotion.Happy => happy,
+                Emotion.Sad => sad,
+                Emotion.Nervous => nervous,
+                Emotion.NervousMuch => nervousMuch,
+                Emotion.HappyNervous => happyNervous,
+                _ => normal
+            };
+        }
     }
 }

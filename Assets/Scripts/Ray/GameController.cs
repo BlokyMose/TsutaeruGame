@@ -24,11 +24,11 @@ namespace Tsutaeru
             string line;
 
             [SerializeField]
-            Sprite sprite;
+            Emotion emotion;
 
             public CharacterName CharacterName { get => characterName; }
             public string Line { get => line; }
-            public Sprite Sprite { get => sprite; }
+            public Emotion Emotion { get => emotion; }
         }
 
         [Serializable]
@@ -131,6 +131,9 @@ namespace Tsutaeru
             hpController.onDie.AddListener(GameOver);
             hiraganaSpawner.OnSpawn += CheckSpawnCorrectHiragana;
 
+            dialogueController.SetSpriteBoy(boySprites.Get(Emotion.Normal));
+            dialogueController.SetSpriteGirl(girlSprites.Get(Emotion.Normal));
+
             PlayStage(0);
 
         }
@@ -208,6 +211,7 @@ namespace Tsutaeru
 
         public void PlayStage(Stage stage)
         {
+            hiraganaSpawner.DestroyAllHiraganas();
             tsu.ClearHiraganas();
             correctHiraganaCooldown = 0;
             currentStage = stage; 
@@ -228,7 +232,7 @@ namespace Tsutaeru
                 nextDialogueBut.gameObject.SetActive(false);
             }            
             
-            else if (currentStage == winStage && currentDialogueLineIndex == gameOverStage.Dialogue.Count - 1)
+            else if (currentStage == winStage && currentDialogueLineIndex == winStage.Dialogue.Count - 1)
             {
                 gameOverBut.gameObject.SetActive(true);
                 nextDialogueBut.gameObject.SetActive(false);
@@ -250,9 +254,9 @@ namespace Tsutaeru
                 var line = currentStage.Dialogue[currentDialogueLineIndex];
 
                 if (currentStage.Dialogue[currentDialogueLineIndex].CharacterName == CharacterName.Boy)
-                    dialogueController.SetDialogueToBubbleBoy(line);
+                    dialogueController.SetDialogueToBubbleBoy(line.Line, boySprites.Get(line.Emotion));
                 else if (currentStage.Dialogue[currentDialogueLineIndex].CharacterName == CharacterName.Girl)
-                    dialogueController.SetDialogueToBubbleGirl(line);
+                    dialogueController.SetDialogueToBubbleGirl(line.Line, girlSprites.Get(line.Emotion));
             }
         }
 
